@@ -1,0 +1,388 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "GO CRUD Users API Docs",
+        "contact": {
+            "name": "Cleberson Henrique"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "host": "localhost:8010",
+    "basePath": "/",
+    "paths": {
+        "/users": {
+            "post": {
+                "description": "Creates a new user with the provided information",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Create new user",
+                "parameters": [
+                    {
+                        "description": "User Data",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/CreateUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "username or email already exists",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user-id}": {
+            "get": {
+                "description": "Get an existing user by their ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "aa0e9b96-5f85-4383-a522-d6144602cb3e",
+                        "description": "User ID",
+                        "name": "user-id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "user not found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing user with the provided information",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update existing user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "aa0e9b96-5f85-4383-a522-d6144602cb3e",
+                        "description": "User ID",
+                        "name": "user-id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "User Data",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "user not found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "username or email already exists",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete existing user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete existing user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "aa0e9b96-5f85-4383-a522-d6144602cb3e",
+                        "description": "User ID",
+                        "name": "user-id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "user not found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "CreateUserRequest": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "example": "135 W 45th St, New York, NY 10036, United States"
+                },
+                "birth_date": {
+                    "type": "string",
+                    "example": "1988-07-07"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "clebersonh@yahoo.com.br"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Jonh Doe"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "123"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "cleberson"
+                }
+            }
+        },
+        "CreateUserResponse": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "example": "Jo135 W 45th St, New York, NY 10036, United States"
+                },
+                "birth_date": {
+                    "type": "string",
+                    "example": "1988-07-07"
+                },
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-11-29T20:47:18.923-03:00"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "clebersonh@yahoo.com.br"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "29dda872-8f1d-11ee-8e7f-66c94c3ada1d"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Jonh Doe"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-11-29T20:47:18.923-03:00"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "cleberson"
+                }
+            }
+        },
+        "Detail": {
+            "type": "object",
+            "properties": {
+                "detail": {
+                    "type": "string"
+                },
+                "field": {
+                    "type": "string"
+                }
+            }
+        },
+        "ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "errors": {
+                    "description": "Errors an slice of returned errors",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Detail"
+                    }
+                }
+            }
+        },
+        "UpdateUserRequest": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "example": "135 W 45th St, New York, NY 10036, United States"
+                },
+                "birth_date": {
+                    "type": "string",
+                    "example": "1988-07-07"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "clebersonh@yahoo.com.br"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Jonh Doe"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "123"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "cleberson"
+                }
+            }
+        },
+        "UserResponse": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "example": "Jo135 W 45th St, New York, NY 10036, United States"
+                },
+                "age": {
+                    "type": "integer",
+                    "example": 35
+                },
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-11-29T20:47:18.923-03:00"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "clebersonh@yahoo.com.br"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "29dda872-8f1d-11ee-8e7f-66c94c3ada1d"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Jonh Doe"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-11-29T20:47:18.923-03:00"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "cleberson"
+                }
+            }
+        }
+    }
+}

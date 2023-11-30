@@ -1,0 +1,266 @@
+basePath: /
+definitions:
+  CreateUserRequest:
+    properties:
+      address:
+        example: 135 W 45th St, New York, NY 10036, United States
+        type: string
+      birth_date:
+        example: "1988-07-07"
+        type: string
+      email:
+        example: clebersonh@yahoo.com.br
+        type: string
+      name:
+        example: Jonh Doe
+        type: string
+      password:
+        example: "123"
+        type: string
+      username:
+        example: cleberson
+        type: string
+    type: object
+  CreateUserResponse:
+    properties:
+      address:
+        example: Jo135 W 45th St, New York, NY 10036, United States
+        type: string
+      birth_date:
+        example: "1988-07-07"
+        type: string
+      created_at:
+        example: "2023-11-29T20:47:18.923-03:00"
+        type: string
+      email:
+        example: clebersonh@yahoo.com.br
+        type: string
+      id:
+        example: 29dda872-8f1d-11ee-8e7f-66c94c3ada1d
+        type: string
+      name:
+        example: Jonh Doe
+        type: string
+      updated_at:
+        example: "2023-11-29T20:47:18.923-03:00"
+        type: string
+      username:
+        example: cleberson
+        type: string
+    type: object
+  Detail:
+    properties:
+      detail:
+        type: string
+      field:
+        type: string
+    type: object
+  ErrorResponse:
+    properties:
+      code:
+        type: integer
+      errors:
+        description: Errors an slice of returned errors
+        items:
+          $ref: '#/definitions/Detail'
+        type: array
+    type: object
+  UpdateUserRequest:
+    properties:
+      address:
+        example: 135 W 45th St, New York, NY 10036, United States
+        type: string
+      birth_date:
+        example: "1988-07-07"
+        type: string
+      email:
+        example: clebersonh@yahoo.com.br
+        type: string
+      name:
+        example: Jonh Doe
+        type: string
+      password:
+        example: "123"
+        type: string
+      username:
+        example: cleberson
+        type: string
+    type: object
+  UserResponse:
+    properties:
+      address:
+        example: Jo135 W 45th St, New York, NY 10036, United States
+        type: string
+      age:
+        example: 35
+        type: integer
+      created_at:
+        example: "2023-11-29T20:47:18.923-03:00"
+        type: string
+      email:
+        example: clebersonh@yahoo.com.br
+        type: string
+      id:
+        example: 29dda872-8f1d-11ee-8e7f-66c94c3ada1d
+        type: string
+      name:
+        example: Jonh Doe
+        type: string
+      updated_at:
+        example: "2023-11-29T20:47:18.923-03:00"
+        type: string
+      username:
+        example: cleberson
+        type: string
+    type: object
+host: localhost:8010
+info:
+  contact:
+    name: Cleberson Henrique
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: GO CRUD Users API Docs
+  version: 1.0.0
+paths:
+  /users:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new user with the provided information
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/CreateUserResponse'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "409":
+          description: username or email already exists
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Create new user
+      tags:
+      - users
+  /users/{user-id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete existing user
+      parameters:
+      - description: User ID
+        example: aa0e9b96-5f85-4383-a522-d6144602cb3e
+        in: path
+        name: user-id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Delete existing user
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: Get an existing user by their ID
+      parameters:
+      - description: User ID
+        example: aa0e9b96-5f85-4383-a522-d6144602cb3e
+        in: path
+        name: user-id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/UserResponse'
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Get user
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update an existing user with the provided information
+      parameters:
+      - description: User ID
+        example: aa0e9b96-5f85-4383-a522-d6144602cb3e
+        in: path
+        name: user-id
+        required: true
+        type: string
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "409":
+          description: username or email already exists
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Update existing user
+      tags:
+      - users
+swagger: "2.0"
