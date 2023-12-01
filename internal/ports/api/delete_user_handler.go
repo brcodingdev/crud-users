@@ -20,7 +20,7 @@ import (
 // @Failure 404 {object} response.ErrorResponse "user not found"
 // @Failure 500 {object} response.ErrorResponse "internal server error"
 // @Router /users/{user-id} [delete]
-func (api UserAPI) handleDelete(
+func (api *UserAPI) handleDelete(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {

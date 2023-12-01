@@ -21,19 +21,19 @@ type User interface {
 }
 
 // UserRepository ...
-type UserRepository struct {
+type userRepository struct {
 	db *gorm.DB
 }
 
 // NewUserUserRepository create a repository instance
-func NewUserUserRepository(db *gorm.DB) *UserRepository {
-	return &UserRepository{
+func NewUserUserRepository(db *gorm.DB) User {
+	return &userRepository{
 		db: db,
 	}
 }
 
 // Create ...
-func (u UserRepository) Create(user *model.User) (*model.User, error) {
+func (u *userRepository) Create(user *model.User) (*model.User, error) {
 	db := u.db.Create(user)
 	if err := db.Error; err != nil {
 		if isDuplicateEntryError(err) {
@@ -49,7 +49,7 @@ func (u UserRepository) Create(user *model.User) (*model.User, error) {
 }
 
 // GetByID ...
-func (u UserRepository) GetByID(ID string) (*model.User, error) {
+func (u *userRepository) GetByID(ID string) (*model.User, error) {
 	var user *model.User
 	db := u.db.First(&user, "ID", ID)
 	if err := db.Error; err != nil {
@@ -64,7 +64,7 @@ func (u UserRepository) GetByID(ID string) (*model.User, error) {
 }
 
 // Update ...
-func (u UserRepository) Update(user *model.User) error {
+func (u *userRepository) Update(user *model.User) error {
 	if err := db.Save(user).Error; err != nil {
 		if isDuplicateEntryError(err) {
 			return aerrors.NewDuplicateEntryError(
@@ -77,7 +77,7 @@ func (u UserRepository) Update(user *model.User) error {
 }
 
 // Delete ...
-func (u UserRepository) Delete(ID string) error {
+func (u *userRepository) Delete(ID string) error {
 	var user *model.User
 	// Unscoped is a hard delete, if you want soft then remove it
 	if err := db.Unscoped().Delete(&user, "ID", ID).Error; err != nil {

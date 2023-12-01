@@ -22,7 +22,7 @@ import (
 // @Failure 409 {object} response.ErrorResponse "username or email already exists"
 // @Failure 500 {object} response.ErrorResponse "internal server error"
 // @Router /users [post]
-func (api UserAPI) handleCreate(
+func (api *UserAPI) handleCreate(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {

@@ -25,7 +25,7 @@ import (
 // @Failure 409 {object} response.ErrorResponse "username or email already exists"
 // @Failure 500 {object} response.ErrorResponse "internal server error"
 // @Router /users/{user-id} [put]
-func (api UserAPI) handleUpdate(
+func (api *UserAPI) handleUpdate(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {

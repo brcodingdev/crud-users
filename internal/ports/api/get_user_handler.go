@@ -22,7 +22,7 @@ import (
 // @Failure 404 {object} response.ErrorResponse "user not found"
 // @Failure 500 {object} response.ErrorResponse "internal server error"
 // @Router /users/{user-id} [get]
-func (api UserAPI) handleGet(
+func (api *UserAPI) handleGet(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {

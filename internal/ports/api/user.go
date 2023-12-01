@@ -24,7 +24,7 @@ func NewUserAPI(
 }
 
 // RegisterRoutes register user routes pointing to /users
-func (api UserAPI) RegisterRoutes() {
+func (api *UserAPI) RegisterRoutes() {
 	subRouter := api.router.PathPrefix("/users").Subrouter()
 
 	subRouter.HandleFunc(

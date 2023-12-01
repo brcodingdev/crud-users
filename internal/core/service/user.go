@@ -21,21 +21,21 @@ type User interface {
 }
 
 // UserService ...
-type UserService struct {
+type userService struct {
 	userRepository repository.User
 }
 
 // NewUserService ...
 func NewUserService(
 	userRepository repository.User,
-) *UserService {
-	return &UserService{
+) User {
+	return &userService{
 		userRepository: userRepository,
 	}
 }
 
 // CreateUser ...
-func (service UserService) CreateUser(
+func (service *userService) CreateUser(
 	user domain.User,
 ) (*domain.User, error) {
 	hashPass, err := util.GenerateHashPassword(user.Password)
@@ -57,7 +57,7 @@ func (service UserService) CreateUser(
 }
 
 // GetUserByID ...
-func (service UserService) GetUserByID(
+func (service *userService) GetUserByID(
 	ID string,
 ) (*domain.User, error) {
 	userModel, err := service.userRepository.GetByID(ID)
@@ -69,7 +69,7 @@ func (service UserService) GetUserByID(
 }
 
 // UpdateUser ...
-func (service UserService) UpdateUser(user domain.User) error {
+func (service *userService) UpdateUser(user domain.User) error {
 	userModel, err := service.userRepository.GetByID(user.ID.String())
 	if err != nil {
 		return err
@@ -95,7 +95,7 @@ func (service UserService) UpdateUser(user domain.User) error {
 }
 
 // DeleteUser ...
-func (service UserService) DeleteUser(ID string) error {
+func (service *userService) DeleteUser(ID string) error {
 	_, err := service.userRepository.GetByID(ID)
 	if err != nil {
 		return err
