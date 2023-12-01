@@ -70,7 +70,7 @@ func (api UserAPI) handleGet(
 		return
 	}
 
-	ok(data, w)
+	ok(data, http.StatusOK, w)
 }
 
 // INTERNAL FUNCTIONS

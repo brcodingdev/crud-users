@@ -16,9 +16,9 @@ func parseBody(r *http.Request, x interface{}) error {
 	return nil
 }
 
-func ok(res []byte, w http.ResponseWriter) {
+func ok(res []byte, httpCode int, w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(httpCode)
 	w.Write(res)
 }
 

@@ -77,7 +77,7 @@ func (api UserAPI) handleCreate(
 		return
 	}
 
-	ok(data, w)
+	ok(data, http.StatusCreated, w)
 }
 
 // INTERNAL FUNCTIONS
